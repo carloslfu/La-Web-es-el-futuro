@@ -140,7 +140,7 @@ const style: StyleGroup = {
     overflow: 'hidden',
   },
   slide: {
-    maxWidth: '800px',
+    width: '800px',
     height: '92%',
     borderRadius: '40px',
     backgroundColor: 'white',

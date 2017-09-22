@@ -26,9 +26,8 @@ const view: View<S> = ({ ctx }) => s => {
     key: ctx.name,
     class: { [style.base]: true },
   }, [
-    h('div', {class: { [style.titlePrimary]: true }}, '¿Que es la web?'),
-    h('div', {class: { [style.titleSecondary]: true }}, '- Aplicación que corre sobre internet'),
-    h('div', {class: { [style.titleSecondary]: true }}, '- Plataforma para aplicaciones que corren sobre internet'),
+    h('div', {class: { [style.titlePrimary]: true }}, 'La Web es fascinante!'),
+    h('div', {class: { [style.titleSecondary]: true }}, 'Abierta / Multiplataforma / Potente'),
   ])
 }
 
@@ -44,10 +43,11 @@ const style: StyleGroup = {
     alignItems: 'center',
   },
   titlePrimary: {
+    padding: '0 20px',
     marginBottom: '50px',
     fontSize: '70px',
     textAlign: 'center',
-    color: palette.blue,
+    color: palette.tertiary,
   },
   titleSecondary: {
     margin: '10px',

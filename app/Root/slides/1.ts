@@ -47,7 +47,7 @@ const style: StyleGroup = {
     marginBottom: '50px',
     fontSize: '70px',
     textAlign: 'center',
-    color: palette.blue,
+    color: palette.tertiary,
   },
   titleSecondary: {
     margin: '10px',

@@ -1,6 +1,8 @@
 export const palette = {
   primary: '#a332c2',
-  blue: '#5b32c2',
+  secondary: '#c26932',
+  tertiary: '#3271c2',
+  quaternary: '#c2b132',
   grey: '#6A6A69',
   greyLight: '#DEDEDE',
   textPrimary: '#363634',
