@@ -23,8 +23,8 @@ export type S = typeof state
 let _fn: any = {}
 
 let monacoLoaded = false
-let testEditor
 let codeEditor
+let testEditor
 
 export const inputs: Inputs<S> = ({ stateOf, toAct }) => ({
   init: () => {
@@ -33,13 +33,13 @@ export const inputs: Inputs<S> = ({ stateOf, toAct }) => ({
         noSemanticValidation: true,
         noSyntaxValidation: false,
       })
-      testEditor = monaco.editor.create(document.getElementById('testEditor'), {
-        value: 'fn(5)',
-        language: 'javascript',
-      })
       codeEditor = monaco.editor.create(document.getElementById('codeEditor'), {
         value: factorialCode,
         language: 'javascript'
+      })
+      testEditor = monaco.editor.create(document.getElementById('testEditor'), {
+        value: 'fn(5)',
+        language: 'javascript',
       })
       monacoLoaded = true
     }
@@ -56,6 +56,7 @@ export const inputs: Inputs<S> = ({ stateOf, toAct }) => ({
     try {
       compileModule(mod).then(ex => {
         _fn.run = ex.fn
+        console.log(_fn.run)
         toAct('SetFnString', _fn.run.toString())
       })
     } catch (err) {}
@@ -96,7 +97,7 @@ const view: View<S> = ({ ctx, ev, act }) => s => {
           class: { [style.btn]: true },
           on: { click: ev('compile') },
         }, 'Compilar'),
-        h('div', {class: { [style.result]: true }}, s.fnString),
+        h('div', {class: { [style.result]: true }}, s.fnString ? s.fnString : 'Sin Compilar'),
       ]),
       h('div', {
         class: { [style.testEditor]: true },
@@ -146,7 +147,7 @@ const style: StyleGroup = {
   },
   testEditor: {
     width: 'calc(100% - 20px)',
-    height: '40px',
+    height: '20px',
   },
   resContainer: {
     display: 'flex',

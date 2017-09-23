@@ -4,7 +4,7 @@ import { runModule } from './module'
 import * as root from './Root'
 import './hmr'
 
-// navigator.serviceWorker.register('service-worker.js')
+navigator.serviceWorker.register('service-worker.js')
 
 let DEV = !process.env.isProduction
 

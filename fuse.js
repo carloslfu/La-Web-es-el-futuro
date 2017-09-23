@@ -9,10 +9,10 @@ const {
   QuantumPlugin,
   EnvPlugin,
 } = require('fuse-box')
-
 const express = require('express')
 const path = require('path')
 const {spawn} = require('child_process')
+const jetpack = require('fs-jetpack')
 
 let fuse, app, vendor
 let isProduction = false
@@ -25,7 +25,7 @@ const setupServer = server => {
 Sparky.task('config', () => {
   fuse = FuseBox.init({
     homeDir: 'app/',
-    output: 'dist/$name.js',
+    output: 'docs/$name.js',
     tsConfig : 'tsconfig.json',
     experimentalFeatures: true,
     useTypescriptCompiler: true,
@@ -58,25 +58,26 @@ Sparky.task('config', () => {
 })
 
 // main task
-Sparky.task('default', ['clean', 'config', 'copy-assets'], () => {
+Sparky.task('default', ['clean', 'config', 'copy-files'], () => {
   fuse.dev({ port: 3000 }, setupServer)
   app.watch().hmr()
   return fuse.run()
 })
 
 // wipe it all
-Sparky.task('clean', () => Sparky.src('dist/*').clean('dist/'))
+Sparky.task('clean', () => Sparky.src('docs/*').clean('docs/'))
 // wipe it all from .fusebox - cache dir
 Sparky.task('clean-cache', () => Sparky.src('.fusebox/*').clean('.fusebox/'))
 
-Sparky.task('copy-assets', () => {
-  Sparky.src('app/service-worker.js').dest('dist/$name')
-  return Sparky.src('vs').dest('dist/$name')
+Sparky.task('copy-files', () => {
+  jetpack.copy('assets', 'docs/assets', { overwrite: true })
+  jetpack.copy('app/service-worker.js', 'docs/service-worker.js', { overwrite: true })
+  jetpack.copy('vs', 'docs/vs', { overwrite: true })
 })
 
 // prod build
 Sparky.task('set-production-env', () => isProduction = true)
-Sparky.task('dist', ['clean', 'clean-cache', 'set-production-env', 'config', 'copy-assets'], () => {
+Sparky.task('dist', ['clean', 'clean-cache', 'set-production-env', 'copy-files', 'config'], () => {
   fuse.dev({ port: 3000 }, setupServer)
   return fuse.run()
 })

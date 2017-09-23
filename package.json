@@ -26,6 +26,7 @@
     "monaco-editor": "^0.10.0"
   },
   "devDependencies": {
+    "fs-jetpack": "^1.2.0",
     "fuse-box": "^2.2.31",
     "svg-join": "^1.1.1",
     "svgo": "^0.7.2",

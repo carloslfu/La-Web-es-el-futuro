@@ -8,7 +8,9 @@ import * as _6 from './6'
 import * as _7 from './7'
 import * as _8 from './8'
 import * as _9 from './9'
-// import * as _10 from './10'
+import * as _10 from './10'
+import * as _11 from './11'
+import * as _12 from './12'
 
 export default {
   0: _0,
@@ -21,5 +23,7 @@ export default {
   7: _7,
   8: _8,
   9: _9,
-  // 10: _10,
+  10: _10,
+  11: _11,
+  12: _12,
 }
