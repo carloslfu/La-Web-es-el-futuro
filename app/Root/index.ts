@@ -7,7 +7,7 @@ import {
   Components,
 } from 'fractal-core'
 import { View, h } from 'fractal-core/interfaces/view'
-import { waitMS, launchIntoFullscreen, exitFullscreen } from '../utils'
+import { waitMS, launchIntoFullscreen, exitFullscreen, isDecendantOfId } from '../utils'
 import { palette } from './constants'
 
 import slides from './slides'
@@ -27,16 +27,23 @@ export const state = {
 
 export type S = typeof state
 
-export const inputs: Inputs<S> = ({ toAct, stateOf, toIt }) => ({
+export const inputs: Inputs<S> = ({ toAct, stateOf, toIt, toChild }) => ({
   init: async () => {
     let hash = window.location.hash || '#0'
     if (hash) {
-      toAct('SetSlide', parseInt(hash.substr(1)))
+      let slide = parseInt(hash.substr(1))
+      toAct('SetSlide', slide)
+      toChild(slide + '', 'init')
     }
     window.addEventListener('hashchange', () => {
-      toAct('SetSlide', parseInt((window.location.hash || '#0').substr(1)))
+      let slide = parseInt((window.location.hash || '#0').substr(1))
+      toAct('SetSlide', slide)
+      setTimeout(() => toChild(slide + '', 'init'), 500)
     })
     window.addEventListener('keyup', ev => {
+      if (isDecendantOfId(ev.target, 'codeEditor') || isDecendantOfId(ev.target, 'testEditor')) {
+        return
+      }
       if (ev.keyCode === 39) {
         toIt('slide', 'NextSlide')
       } else if (ev.keyCode === 37) {
@@ -45,18 +52,22 @@ export const inputs: Inputs<S> = ({ toAct, stateOf, toIt }) => ({
     })
   },
   slide: async (action: string) => {
-    let s: S = stateOf()
-    if (action === 'NextSlide' && s.slide === 0 || action === 'NextSlide' && s.slide === numSlides - 1) {
-    }
     await toAct('SetAnimated', true)
     await toAct('SetStep', action === 'NextSlide' ? 'hiddenLeft' : 'hiddenRight')
     await waitMS(300)
+    let initialSlide = stateOf().slide
     await toAct(action)
-    await toIt('setHash', stateOf().slide)
+    let slide = stateOf().slide
+    if (slide === initialSlide) {
+      await toAct('SetStep', 'visible')
+      return
+    }
+    await toIt('setHash', slide)
     await toAct('SetAnimated', false)
     await toAct('SetStep', action === 'NextSlide' ? 'hiddenRight' : 'hiddenLeft')
     await waitMS(100)
     await toAct('SetAnimated', true)
+    await toChild(slide + '', 'init')
     await toAct('SetStep', 'visible')
   },
   setHash: (hash: string) => {
@@ -81,11 +92,15 @@ export const actions: Actions<S> = {
   SetSlide: assoc('slide'),
   SetAnimated: assoc('animated'),
   NextSlide: () => s => {
-    s.slide++
+    if (s.slide < numSlides - 1) {
+      s.slide++
+    }
     return s
   },
   PrevSlide: () => s => {
-    s.slide--
+    if (s.slide > 0) {
+      s.slide--
+    }
     return s
   },
 }

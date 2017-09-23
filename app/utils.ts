@@ -25,3 +25,13 @@ export function exitFullscreen() {
     ;(document as any).webkitExitFullscreen()
   }
 }
+
+export function isDecendantOfId (el, id): boolean {
+  let x: HTMLElement = el
+  while (x = x.parentElement) {
+    if (x.id === id) {
+      return true
+    }
+  }
+  return false
+}

@@ -22,7 +22,8 @@
   },
   "homepage": "https://github.com/fractalPlatform/Fractal-quickstart#readme",
   "dependencies": {
-    "fractal-core": "^3.3.3"
+    "fractal-core": "^3.3.3",
+    "monaco-editor": "^0.10.0"
   },
   "devDependencies": {
     "fuse-box": "^2.2.31",

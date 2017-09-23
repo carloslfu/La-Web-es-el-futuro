@@ -8,5 +8,15 @@
   <body>
     <div id="app"></div>
   </body>
+  <script src="vs/loader.js"></script>
+  <script>
+  require.config({ paths: { 'vs': 'vs' }})
+  require(['vs/editor/editor.main'], function() {
+    window.monacoLoaded = true
+    if (window.onMonacoLoaded) {
+      window.onMonacoLoaded()
+    }
+  })
+  </script>
   $bundles
 </html>

@@ -70,7 +70,8 @@ Sparky.task('clean', () => Sparky.src('dist/*').clean('dist/'))
 Sparky.task('clean-cache', () => Sparky.src('.fusebox/*').clean('.fusebox/'))
 
 Sparky.task('copy-assets', () => {
-  return Sparky.src('app/service-worker.js').dest('dist/$name')
+  Sparky.src('app/service-worker.js').dest('dist/$name')
+  return Sparky.src('vs').dest('dist/$name')
 })
 
 // prod build

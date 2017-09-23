@@ -7,7 +7,7 @@ import {
 import { View, h } from 'fractal-core/interfaces/view'
 import { palette } from '../constants'
 
-export const name = 'Root'
+export const name = '0'
 
 export const state = {}
 
