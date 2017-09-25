@@ -31,7 +31,7 @@ const view: View<S> = ({ ctx }) => s => {
       h('li', {}, 'Proyecto conjunto de Mozilla, Samsung y otras empresas'),
       h('li', {}, 'Un motor de renderizado muy rápido, masivamente paralelo e implementado en Rust'),
       h('li', {}, 'Rust es un lenguaje diseñado con los requerimientos de Servo en mente'),
-      h('li', {}, 'Quantum (Motor de CSS de Servo) actualmente en estado experimental en Firefox y otros componentes de Servo o “cómo reemplazar partes de un avión mientras vuela”'),
+      h('li', {}, 'Quantum (Motor de CSS de Servo) actualmente en estado experimental en Firefox. Hito comparado con “reemplazar partes de un avión mientras vuela”.'),
       h('li', {}, 'Run Servo run!'),
     ]),
   ])
